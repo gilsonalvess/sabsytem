@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/main_layout}">
+<div layout:fragment="content" class="container">
+    <div th:switch="${users}">
+        <h2 th:case="null">Não existe usuários cadastrados</h2>
+        <div th:case="*">
+            <h2>Usuários</h2>
+            <div>
+                <p>
+                    <button class="btn btn-primary" id="btn-novo-usuario" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Novo usuário
+                    </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <form id="form-user" th:action="@{/usuarios/adicionar}" th:object="${usuario}" method="post">
+                            <div class="form-row">
+                                <input th:value="${id}" style="display:none;" name="id">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Email</label>
+                                    <input th:value="${email}" name="email" required type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputPassword4">Senha</label>
+                                    <input th:value="${password}" name="password" type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputUser">Usuário para login</label>
+                                    <input th:value="${username}" name="username" type="text" class="form-control" id="inputUser">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputState">Perfil</label>
+                                    <select th:value="${role}" name="role" id="inputState" class="form-control">
+                                        <option selected>Selecione</option>
+                                        <option>Usuário admin</option>
+                                        <option>Usuário padrão</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input th:checked="${desativado}" name="desativado-form" class="form-check-input" type="checkbox" id="gridCheck">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Desativado
+                                    </label>
+                                </div>
+                            </div>
+                            <button id="btn-salvar" type="submit" class="btn btn-primary">Adicionar</button>
+                            <button type="button" class="btn btn-default">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <table id="table-user" class="table table-striped">
+                <thead>
+                <tr class="text-center">
+                    <th style="display:none;" scope="col">id</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Desativado</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-center" th:each="user : ${users}">
+                    <td id="id" style="display:none;" th:text="${user.id}"></td>
+                    <td id="username" th:text="${user.username}"></td>
+                    <td id="email" th:text="${user.email}"></td>
+                    <td id="role" th:text="${user.role}"></td>
+                    <td><input id="desativado" th:checked="${user.desativado}" name="desativado" class="form-check-input" disabled type="checkbox"></td>
+                    <td>
+                        <button type="button" id="btn-editar" data-toggle="" href="#collapseExample" class="btn btn-info btn-sm">Editar</button>
+                        <!--                                                <button id="btn-excluir" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Excluir</button>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal confirme-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alerta!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente excluir o usuário?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <a id="btn-confirma" href="" type="button" class="btn btn-primary">Sim</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', "#btn-editar", function () {
+                $('#btn-editar').attr("data-toggle", "collapse");
+                var $row = $(this).closest("tr");
+                var $id = $row.find("#id").text();
+                $.ajax({
+                    method: 'GET',
+                    url: 'http://localhost:8080/usuarios/editar/' + $id,
+                    success: function (data) {
+                        $("input[name*='id']").val(data.id).text();
+                        $("input[name*='username']").val(data.username).text();
+                        $("input[name*='email']").val(data.email).text();
+                        $("input[name*='role']").val(data.role).select();
+                        $("input[name*='desativado-form']").prop("checked", data.desativado);
+                        $('#btn-salvar').html("Editar");
+                        $('#form-user').attr("action", "/usuarios/editar");
+                        $('#btn-novo-usuario').attr("aria-expanded", true);
+                    },
+                    error: function () {
+                        alert("Houve um erro na requisição!");
+                    }
+                });
+            });
+        });
+
+        $("#btn-excluir").click(function () {
+            var $row = $(this).closest("tr");
+            var $id = $row.find("#id").text();
+            $('#btn-excluir').attr("href", "/usuarios/remover/" + $id);
+        });
+
+    </script>
+</div>
+</html>
