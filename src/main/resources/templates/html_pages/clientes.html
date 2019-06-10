@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/main_layout}">
+<div layout:fragment="content" class="container">
+    <div th:switch="${clientes}">
+        <h2 th:case="null">Não existe clientes cadastrados</h2>
+        <div th:case="*">
+            <div class="arrow">
+                <h2>Clientes</h2>
+            </div>
+            <div>
+                <p class="text-right">
+                    <button class="btn btn-primary" id="btn-novo-cliente" data-toggle="modal" data-target="#clienteModal">
+                        Novo cliente
+                    </button>
+                </p>
+            </div>
+            <table id="table-cliente" class="table table-striped">
+                <thead>
+                <tr class="text-center">
+                    <th style="display:none;" scope="col">id</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Fone</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr class="text-center" th:each="cliente : ${clientes}">
+                    <td id="id-cliente" style="display:none;" th:text="${cliente.id}"></td>
+                    <td id="nome-cliente" th:text="${cliente.nome}"></td>
+                    <td id="email-cliente" th:text="${cliente.email}"></td>
+                    <td id="fone-cliente" th:text="${cliente.fone}"></td>
+                    <td>
+                        <button id="btn-editar-cliente" data-toggle="modal" data-target="#clienteModal" class="btn btn-info btn-sm">Editar</button>
+                        <button id="btn-excluir-cliente" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Excluir</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal form cliente-->
+    <div class="modal fade bd-example-modal-lg" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="clienteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clienteModalLabel">Novo usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card card-body">
+                        <form id="form-cliente" th:action="@{/clientes/adicionar}" th:object="${cliente}" method="post">
+                            <div class="form-row">
+                                <input th:value="${id}" style="display:none;" id="input-id" name="id">
+                                <div class="form-group col-md-4">
+                                    <label for="input-nome">Nome</label>
+                                    <input th:value="${nome}" name="nome" type="text" class="form-control" id="input-nome" placeholder="Nome">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="input-email">Email</label>
+                                    <input th:value="${email}" name="email" required type="email" class="form-control" id="input-email" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="input-fone">Fone</label>
+                                    <input th:value="${fone}" name="fone" type="text" class="form-control" id="input-fone">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="input-sexo">Sexo</label>
+                                    <select th:value="${sexo}" name="sexo" id="input-sexo" class="form-control">
+                                        <option selected>Selecione</option>
+                                        <option>Feminino</option>
+                                        <option>Masculino</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <button id="btn-salvar-cliente" type="submit" class="btn btn-primary">Adicionar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal confirme-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alerta!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente excluir o cliente?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <a id="btn-confirma" class="btn btn-primary" href="" role="button">Sim</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
