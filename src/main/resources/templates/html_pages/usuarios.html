@@ -1,46 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorate="~{fragments/main_layout}">
-<div layout:fragment="content" class="container">
-    <div th:switch="${users}">
-        <h2 th:case="null">Não existe usuários cadastrados</h2>
-        <div th:case="*">
-            <div class="arrow">
-                <h2>Usuários</h2>
-            </div>
-            <div>
-                <p class="text-right">
-                    <button class="btn btn-primary" id="btn-novo-usuario" data-toggle="modal" data-target="#usuarioModal">
-                        Novo usuário
-                    </button>
-                </p>
-            </div>
-            <table id="table-user" class="table table-striped">
-                <thead>
-                <tr class="text-center">
-                    <th style="display:none;" scope="col">id</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Desativado</th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="text-center" th:each="user : ${users}">
-                    <td id="id" style="display:none;" th:text="${user.id}"></td>
-                    <td id="username" th:text="${user.username}"></td>
-                    <td id="email" th:text="${user.email}"></td>
-                    <td id="role" th:text="${user.role}"></td>
-                    <td><input id="desativado" th:checked="${user.desativado}" name="desativado" class="form-check-input" disabled type="checkbox"></td>
-                    <td>
-                        <button type="button" id="btn-editar" data-toggle="modal" data-target="#usuarioModal" class="btn btn-info btn-sm">Editar</button>
-                        <!--                                                <button id="btn-excluir" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Excluir</button>-->
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+<div layout:fragment="content">
+    <div class="card" style="padding: 20px">
+        <h2>Usuários</h2>
+        <div>
+            <p class="text-right">
+                <button class="btn btn-primary" id="btn-novo-usuario" data-toggle="modal" data-target="#usuarioModal">
+                    Novo usuário
+                </button>
+            </p>
         </div>
+        <form class="form-inline my-3 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Pesquisar</button>
+        </form>
+        <br>
+
+        <table id="table-user" class="table table-striped">
+            <thead>
+            <tr class="text-center">
+                <th style="display:none;" scope="col">id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Desativado</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-center" th:each="user : ${users}">
+                <td id="id" style="display:none;" th:text="${user.id}"></td>
+                <td id="username" th:text="${user.username}"></td>
+                <td id="email" th:text="${user.email}"></td>
+                <td id="role" th:text="${user.role}"></td>
+                <td><input id="desativado" th:checked="${user.desativado}" name="desativado" class="form-check-input" disabled type="checkbox"></td>
+                <td>
+                    <button type="button" id="btn-editar" data-toggle="modal" data-target="#usuarioModal" class="btn btn-info btn-sm">Editar</button>
+                    <!--                                                <button id="btn-excluir" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Excluir</button>-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     <!-- Modal form usuario-->
@@ -64,17 +65,17 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="inputPassword4">Senha</label>
-                                    <input th:value="${password}" name="password" type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                                    <input th:value="${password}" name="password" required type="password" class="form-control" id="inputPassword4" placeholder="Password">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputUser">Usuário para login</label>
-                                    <input th:value="${username}" name="username" type="text" class="form-control" id="inputUser">
+                                    <input th:value="${username}" name="username" required type="text" class="form-control" id="inputUser">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="inputState">Perfil</label>
-                                    <select th:value="${role}" name="role" id="inputState" class="form-control">
+                                    <select th:value="${role}" name="role" id="input-role" class="form-control">
                                         <option selected>Selecione</option>
                                         <option>Usuário admin</option>
                                         <option>Usuário padrão</option>
@@ -83,7 +84,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input th:checked="${desativado}" name="desativado-form" class="form-check-input" type="checkbox" id="gridCheck">
+                                    <input th:checked="${desativado}" name="desativado" class="form-check-input" type="checkbox" id="cbx-desativato">
                                     <label class="form-check-label" for="gridCheck">
                                         Desativado
                                     </label>
@@ -97,9 +98,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="modal-footer">
-
-                </div>
+                <div class="modal-footer"></div>
             </div>
         </div>
     </div>

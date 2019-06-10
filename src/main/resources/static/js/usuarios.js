@@ -9,8 +9,8 @@ $(document).ready(function () {
                 $("input[name*='id']").val(data.id).text();
                 $("input[name*='username']").val(data.username).text();
                 $("input[name*='email']").val(data.email).text();
-                $("input[name*='role']").val(data.role).select();
-                $("input[name*='desativado-form']").prop("checked", data.desativado);
+                $("#input-role").val(data.role).select();
+                $("#cbx-desativato").prop("checked", data.desativado);
                 $('#btn-salvar').html("Editar");
                 $('#usuarioModalLabel').html("Editando usuário " + data.username);
                 $('#form-user').attr("action", "/usuarios/editar");
