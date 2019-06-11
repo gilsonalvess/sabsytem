@@ -35,6 +35,12 @@ public class ClienteController {
         return clienteService.findOne(id);
     }
 
+    @GetMapping("/pesquisar")
+    public String pesquisar(@RequestParam(name = "nome") String nome, Model model) {
+        model.addAttribute("clientes", clienteService.queryClienteByNome(nome));
+        return "html_pages/clientes";
+    }
+
     @PostMapping("/editar")
     public String editar(Cliente cliente, Model model) {
         clienteService.save(cliente);

@@ -11,12 +11,11 @@
                 </button>
             </p>
         </div>
-        <form class="form-inline my-3 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Pesquisar</button>
-        </form>
+        <div class="form-inline my-3 my-lg-0">
+            <input id="input-pesq-cliente" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <a id="btn-pesq-cliente" href="" class="btn btn-outline-primary my-2 my-sm-0" role="button">Pesquisar</a>
+        </div>
         <br>
-
         <table id="table-cliente" class="table table-striped">
             <thead>
             <tr class="text-center">
@@ -42,73 +41,73 @@
         </table>
     </div>
 
-<!-- Modal form cliente-->
-<div class="modal fade bd-example-modal-lg" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="clienteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="clienteModalLabel">Novo usuário</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="card card-body">
-                    <form id="form-cliente" th:action="@{/clientes/adicionar}" th:object="${cliente}" method="post">
-                        <div class="form-row">
-                            <input th:value="${id}" style="display:none;" id="input-id" name="id">
-                            <div class="form-group col-md-4">
-                                <label for="input-nome">Nome</label>
-                                    <input th:value="${nome}" name="nome" type="text" class="form-control" id="input-nome" placeholder="Nome">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="input-email">Email</label>
-                                <input th:value="${email}" name="email" required type="email" class="form-control" id="input-email" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="input-fone">Fone</label>
-                                    <input th:value="${fone}" name="fone" type="text" class="form-control" id="input-fone">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="input-sexo">Sexo</label>
-                                <select th:value="${sexo}" name="sexo" id="input-sexo" class="form-control">
-                                    <option selected>Selecione</option>
-                                    <option>Feminino</option>
-                                    <option>Masculino</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <button id="btn-salvar-cliente" type="submit" class="btn btn-primary">Adicionar</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        </div>
-                    </form>
+    <!-- Modal form cliente-->
+    <div class="modal fade bd-example-modal-lg" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="clienteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clienteModalLabel">Novo usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-            <div class="modal-footer">
+                <div class="modal-body">
+                    <div class="card card-body">
+                        <form id="form-cliente" th:action="@{/clientes/adicionar}" th:object="${cliente}" method="post">
+                            <div class="form-row">
+                                <input th:value="${id}" style="display:none;" id="input-id" name="id">
+                                <div class="form-group col-md-4">
+                                    <label for="input-nome">Nome</label>
+                                    <input th:value="${nome}" name="nome" type="text" class="form-control" id="input-nome" placeholder="Nome">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="input-email">Email</label>
+                                    <input th:value="${email}" name="email" required type="email" class="form-control" id="input-email" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="input-fone">Fone</label>
+                                    <input th:value="${fone}" name="fone" type="text" class="form-control" id="input-fone">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="input-sexo">Sexo</label>
+                                    <select th:value="${sexo}" name="sexo" id="input-sexo" class="form-control">
+                                        <option selected>Selecione</option>
+                                        <option>Feminino</option>
+                                        <option>Masculino</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <button id="btn-salvar-cliente" type="submit" class="btn btn-primary">Adicionar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Modal confirme-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Alerta!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Deseja realmente excluir o cliente?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                <a id="btn-confirma" class="btn btn-primary" href="" role="button">Sim</a>
+    <!-- Modal confirme-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alerta!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente excluir o cliente?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <a id="btn-confirma" class="btn btn-primary" href="" role="button">Sim</a>
                 </div>
             </div>
         </div>

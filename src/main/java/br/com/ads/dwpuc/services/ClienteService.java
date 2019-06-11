@@ -23,10 +23,14 @@ public class ClienteService {
     }
 
     public Cliente save(Cliente cliente) {
-        return clienteRepository.save(cliente);
+        return clienteRepository.saveAndFlush(cliente);
     }
 
     public void remove(Long id){
         clienteRepository.deleteById(id);
+    }
+
+    public List<Cliente> queryClienteByNome (String nome){
+        return clienteRepository.queryClienteByNome(nome);
     }
 }

@@ -11,7 +11,7 @@ $(document).ready(function () {
                 $("#input-fone").val(data.fone).text();
                 $("#input-email").val(data.email).text();
                 $("#input-sexo").val(data.sexo).select();
-                $('#btn-salvar').html("Editar");
+                $('#btn-salvar-cliente').html("Editar");
                 $('#clienteModalLabel').html("Editando cliente " + data.nome);
                 $('#form-cliente').attr("action", "/clientes/editar");
             },
@@ -31,5 +31,10 @@ $(document).ready(function () {
         var $row = $(this).closest("tr");
         var $id = $row.find("#id-cliente").text();
         $('#btn-confirma').attr("href", "/clientes/remover/" + $id);
+    });
+
+    $(document).on('click', "#btn-pesq-cliente", function () {
+        var nome = $("#input-pesq-cliente").val();
+        $('#btn-pesq-cliente').attr("href", "/clientes/pesquisar?nome=" + nome);
     });
 });
