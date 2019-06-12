@@ -1,10 +1,13 @@
 package br.com.ads.dwpuc.models;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "agendamento")
@@ -26,7 +29,12 @@ public class Agendamento {
 
     @NotBlank
     @Column(name = "hora_agendamento", nullable = false)
-    private LocalDateTime horaAgendamento;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    private LocalTime horaAgendamento;
+
+    @NotBlank
+    @Column
+    private String status;
 
     public Long getId() {
         return id;
@@ -52,11 +60,24 @@ public class Agendamento {
         this.dataAgendamento = dataAgendamento;
     }
 
-    public LocalDateTime getHoraAgendamento() {
+    public LocalTime getHoraAgendamento() {
         return horaAgendamento;
     }
 
-    public void setHoraAgendamento(LocalDateTime horaAgendamento) {
+    public void setHoraAgendamento(LocalTime horaAgendamento) {
         this.horaAgendamento = horaAgendamento;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getHoraFormatada() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return getHoraAgendamento().format(formatter);
     }
 }

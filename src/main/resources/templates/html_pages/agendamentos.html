@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/main_layout}">
+<div layout:fragment="content">
+    <div class="card" style="padding: 20px">
+        <h2>Agendamentos - colocar calendario para filtro (o default será a data atual), sempre trazer os agendamento do dia</h2>
+        <h2>Ao cancelar uma agendamento mostrar o horário disponível para encaixe</h2>
+        <span class="label label-primary">Primary Label</span>
+        <div>
+            <p class="text-right">
+                <button class="btn btn-primary" id="btn-novo-agendamento" data-toggle="modal" data-target="#agendamentoModal">
+                    Novo agendamento
+                </button>
+            </p>
+        </div>
+        <div class="form-inline my-3 my-lg-0">
+            <input id="input-pesq-agendamento" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <a id="btn-pesq-agendamento" href="" class="btn btn-outline-primary my-2 my-sm-0" role="button">Pesquisar</a>
+        </div>
+        <br>
+        <table id="table-agendamento" class="table table-striped">
+            <thead>
+            <tr class="text-center">
+                <th scope="col">Codigo</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Fone</th>
+                <th scope="col">Horário</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-center" th:each="agendamento : ${agendamentos}">
+                <td id="id-agendamento" th:text="${agendamento.id}"></td>
+                <td id="nome-cliente-agendamento" th:text="${agendamento.cliente.nome}"></td>
+                <td id="fone-cliente-agendamento" th:text="${agendamento.cliente.fone}"></td>
+                <td id="hora-agendamento" th:text="${agendamento.getHoraFormatada()}"></td>
+                <td id="status-agendamento">
+                    <span class="badge badge-success" th:text="${agendamento.status}"></span>
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Small button
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Confirmar</a>
+                            <a class="dropdown-item" href="#">Reagendar</a>
+                            <a class="dropdown-item" href="#">Cancelar</a>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal form agendamento-->
+    <div class="modal fade bd-example-modal-lg" id="agendamentoModal" tabindex="-1" role="dialog" aria-labelledby="agendamentoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="agendamentoModalLabel">Novo usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card card-body">
+                        <form id="form-agendamento" th:action="@{/agendamentos/adicionar}" th:object="${agendamento}" method="post">
+                            <div class="form-row">
+                                <input th:value="${id}" style="display:none;" id="input-id" name="id">
+                                <div class="form-group col-md-4">
+                                    <label for="input-nome">Nome</label>
+                                    <input th:value="${nome}" name="nome" type="text" class="form-control" id="input-nome" placeholder="Nome">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="input-email">Email</label>
+                                    <input th:value="${email}" name="email" required type="email" class="form-control" id="input-email" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="input-fone">Fone</label>
+                                    <input th:value="${fone}" name="fone" type="text" class="form-control" id="input-fone">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="input-sexo">Sexo</label>
+                                    <select th:value="${sexo}" name="sexo" id="input-sexo" class="form-control">
+                                        <option selected>Selecione</option>
+                                        <option>Feminino</option>
+                                        <option>Masculino</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <button id="btn-salvar-agendamento" type="submit" class="btn btn-primary">Adicionar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal confirme-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alerta!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente cancelar o agendamento?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <a id="btn-confirma" class="btn btn-primary" href="" role="button">Sim</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
