@@ -1,7 +1,7 @@
 package br.com.ads.dwpuc.models;
 
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -19,6 +19,7 @@ public class Agendamento {
     private Long id;
 
     @NotBlank
+    @JsonManagedReference
     @JoinColumn(name = "cliente_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private Cliente cliente;
@@ -29,7 +30,6 @@ public class Agendamento {
 
     @NotBlank
     @Column(name = "hora_agendamento", nullable = false)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime horaAgendamento;
 
     @NotBlank

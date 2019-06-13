@@ -1,5 +1,7 @@
 package br.com.ads.dwpuc.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
@@ -28,6 +30,7 @@ public class Cliente {
     @Column
     private String sexo;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<Agendamento> agendamento;
 

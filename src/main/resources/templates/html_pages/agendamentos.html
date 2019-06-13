@@ -61,7 +61,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="agendamentoModalLabel">Novo usuário</h5>
+                    <h5 class="modal-title" id="agendamentoModalLabel">Novo agendamento</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -71,26 +71,19 @@
                         <form id="form-agendamento" th:action="@{/agendamentos/adicionar}" th:object="${agendamento}" method="post">
                             <div class="form-row">
                                 <input th:value="${id}" style="display:none;" id="input-id" name="id">
-                                <div class="form-group col-md-4">
-                                    <label for="input-nome">Nome</label>
-                                    <input th:value="${nome}" name="nome" type="text" class="form-control" id="input-nome" placeholder="Nome">
+                                <div class="form-group col-md-3">
+                                    <label for="datepicker">Data</label>
+                                    <input th:value="${dataAgendamento}" name="dataAgendamento" id="datepicker" class="form-control">
+
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="input-email">Email</label>
-                                    <input th:value="${email}" name="email" required type="email" class="form-control" id="input-email" placeholder="Email">
+                                <div class="form-group col-md-2">
+                                    <label for="timepicker">Hora</label>
+                                    <input th:value="${horaAgendamento}" name="horaAgendamento" required id="timepicker" class="form-control">
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="input-fone">Fone</label>
-                                    <input th:value="${fone}" name="fone" type="text" class="form-control" id="input-fone">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="input-sexo">Sexo</label>
-                                    <select th:value="${sexo}" name="sexo" id="input-sexo" class="form-control">
-                                        <option selected>Selecione</option>
-                                        <option>Feminino</option>
-                                        <option>Masculino</option>
+                                <div class="form-group col-md-7">
+                                    <label for="input-cliente-agend">Cliente</label>
+                                    <select th:value="${cliente}" name="cliente" id="input-cliente-agend" class="form-control">
+                                        <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nome}">
                                     </select>
                                 </div>
                             </div>
@@ -98,6 +91,17 @@
                                 <button id="btn-salvar-agendamento" type="submit" class="btn btn-primary">Adicionar</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             </div>
+                            <script>
+                                $('#datepicker').datepicker({
+                                    uiLibrary: 'bootstrap4',
+                                    language: 'pt-br'
+                                });
+                                $('#timepicker').timepicker({
+                                    uiLibrary: 'bootstrap4',
+                                    format: 'hh:mm',
+                                    language: 'pt-br'
+                                });
+                            </script>
                         </form>
                     </div>
                 </div>
