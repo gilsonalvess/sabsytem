@@ -4,8 +4,7 @@
 <div layout:fragment="content">
     <div class="card" style="padding: 20px">
         <h2>Agendamentos - colocar calendario para filtro (o default será a data atual), sempre trazer os agendamento do dia</h2>
-        <h2>Ao cancelar uma agendamento mostrar o horário disponível para encaixe</h2>
-        <span class="label label-primary">Primary Label</span>
+        <h2>No dashboard colocar a info dos proximos três agendamento, os cancelados do dia e reagendados (só dados info)</h2>
         <div>
             <p class="text-right">
                 <button class="btn btn-primary" id="btn-novo-agendamento" data-toggle="modal" data-target="#agendamentoModal">
@@ -36,7 +35,7 @@
                 <td id="fone-cliente-agendamento" th:text="${agendamento.cliente.fone}"></td>
                 <td id="hora-agendamento" th:text="${agendamento.getHoraFormatada()}"></td>
                 <td id="status-agendamento">
-                    <span class="badge badge-success" th:text="${agendamento.status}"></span>
+                    <span id="span-status" class="badge badge-secondary" th:text="${agendamento.status}"></span>
                 </td>
                 <td>
                     <div class="btn-group">
@@ -44,10 +43,10 @@
                             Small button
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Confirmar</a>
-                            <a class="dropdown-item" href="#">Reagendar</a>
-                            <a class="dropdown-item" href="#">Cancelar</a>
-
+                            <a id="confirmar-agend" class="dropdown-item" href="">Confirmar</a>
+                            <a id="reagendar" class="dropdown-item" href="">Reagendar</a>
+                            <a id="finalizar-agend" class="dropdown-item" href="">Finalizar</a>
+                            <a id="cancelar-agend" class="dropdown-item" href="">Cancelar</a>
                         </div>
                     </div>
                 </td>
@@ -73,8 +72,7 @@
                                 <input th:value="${id}" style="display:none;" id="input-id" name="id">
                                 <div class="form-group col-md-3">
                                     <label for="datepicker">Data</label>
-                                    <input th:value="${dataAgendamento}" name="dataAgendamento" id="datepicker" class="form-control">
-
+                                    <input th:value="${dataAgendamento}" name="dataAgendamento" required id="datepicker" class="form-control">
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="timepicker">Hora</label>
@@ -82,7 +80,7 @@
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label for="input-cliente-agend">Cliente</label>
-                                    <select th:value="${cliente}" name="cliente" id="input-cliente-agend" class="form-control">
+                                    <select name="cliente" id="input-cliente-agend" class="form-control">
                                         <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nome}">
                                     </select>
                                 </div>
@@ -91,17 +89,6 @@
                                 <button id="btn-salvar-agendamento" type="submit" class="btn btn-primary">Adicionar</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             </div>
-                            <script>
-                                $('#datepicker').datepicker({
-                                    uiLibrary: 'bootstrap4',
-                                    language: 'pt-br'
-                                });
-                                $('#timepicker').timepicker({
-                                    uiLibrary: 'bootstrap4',
-                                    format: 'hh:mm',
-                                    language: 'pt-br'
-                                });
-                            </script>
                         </form>
                     </div>
                 </div>

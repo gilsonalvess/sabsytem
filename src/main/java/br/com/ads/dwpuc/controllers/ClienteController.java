@@ -23,10 +23,9 @@ public class ClienteController {
     }
 
     @PostMapping("/adicionar")
-    public String adicionar(Cliente cliente, Model model) {
+    public String adicionar(Cliente cliente) {
         clienteService.save(cliente);
-        model.addAttribute("clientes", clienteService.findAll());
-        return "html_pages/clientes";
+        return "redirect:/clientes/listar";
     }
 
     @RequestMapping(value = "/editar/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -42,9 +41,8 @@ public class ClienteController {
     }
 
     @PostMapping("/editar")
-    public String editar(Cliente cliente, Model model) {
+    public String editar(Cliente cliente) {
         clienteService.save(cliente);
-        model.addAttribute("clientes", clienteService.findAll());
         return "redirect:/clientes/listar";
     }
 

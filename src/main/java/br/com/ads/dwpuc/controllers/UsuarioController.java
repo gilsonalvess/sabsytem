@@ -28,8 +28,7 @@ public class UsuarioController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         usuario.setPassword(encoder.encode(usuario.getPassword()));
         usuarioService.save(usuario);
-        model.addAttribute("users", usuarioService.findAll());
-        return "html_pages/usuarios";
+        return "redirect:/usuarios/listar";
     }
 
     @RequestMapping(value = "/editar/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -43,7 +42,6 @@ public class UsuarioController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         usuario.setPassword(encoder.encode(usuario.getPassword()));
         usuarioService.save(usuario);
-        model.addAttribute("users", usuarioService.findAll());
         return "redirect:/usuarios/listar";
     }
 }

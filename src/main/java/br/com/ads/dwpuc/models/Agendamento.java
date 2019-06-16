@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -18,17 +19,15 @@ public class Agendamento {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank
+    @NotNull
     @JsonManagedReference
     @JoinColumn(name = "cliente_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private Cliente cliente;
 
-    @NotBlank
     @Column(name = "data_agendamento", nullable = false)
     private LocalDate dataAgendamento;
 
-    @NotBlank
     @Column(name = "hora_agendamento", nullable = false)
     private LocalTime horaAgendamento;
 
