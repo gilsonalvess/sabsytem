@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AgendamentoService {
@@ -21,8 +23,14 @@ public class AgendamentoService {
         return agendamentos;
     }
 
-    public Agendamento findOne(Long id) {
-        return agendamentoRepository.getOne(id);
+    public List<Agendamento> findAgendamentosByData(LocalDate data) {
+        List<Agendamento> agendamentos = agendamentoRepository.findAgendamentosByData(data);
+        calculaAtraso(agendamentos);
+        return agendamentos;
+    }
+
+    public Optional<Agendamento> findOne(Long id) {
+        return agendamentoRepository.findById(id);
     }
 
     public Agendamento acaoStatusAgendamento(Long id, String paramStatus) {

@@ -1,19 +1,57 @@
 <!DOCTYPE HTML>
-<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}">
 <head>
-    <title>Spring Boot Thymeleaf + Spring Security</title>
+    <title>SabSystem</title>
 </head>
 <body>
 <div layout:fragment="content" class="container-fluid">
-    <hr>
-    <div class="jumbotron">
-        <h1>Navbar example</h1>
-        <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work.
-            It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+    <div class="card" style="padding: 30px">
+        <div>
+            <h3>Painel</h3>
+        </div>
+        <hr>
+        <br>
+        <h4 class="text-secondary">Dados agenda do dia</h4><br>
+        <div class="card-deck">
+            <div class="card bg-primary">
+                <div class="card-body text-center">
+                    <h4 class="card-text text-white">Quantidade</h4>
+                    <p class="card-text">
+                    <h1 class="text-white font-weight-bold" th:text="${qtdAgendamentos}">10</h1></p>
+                </div>
+            </div>
+            <div class="card bg-warning">
+                <div class="card-body text-center">
+                    <h4 class="card-text text-white">Atrasados</h4>
+                    <p class="card-text">
+                    <h1 class="text-white font-weight-bold" th:text="${qtdAtrasos}">10</h1></p>
+                </div>
+            </div>
+            <div class="card bg-success">
+                <div class="card-body text-center">
+                    <h4 class="card-text text-white">Finalizados</h4>
+                    <p class="card-text">
+                    <h1 class="text-white font-weight-bold" th:text="${qtdFinalizados}">10</h1></p>
+                </div>
+            </div>
+            <div class="card bg-danger">
+                <div class="card-body text-center">
+                    <h4 class="card-text text-white" >Cancelados</h4>
+                    <p class="card-text">
+                    <h1 class="text-white font-weight-bold" th:text="${qtdCancelados}"></h1></p>
+                </div>
+            </div>
+        </div>
+        <br>
         <p>
-            <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
+            <a class="btn btn-secondary" href="/agendamentos/hoje" role="button">Ir para agendamentos &raquo;</a>
         </p>
     </div>
 </div>
 </body>
+<style>
+    h1 {
+        size: 30px;
+    }
+</style>
 </html>

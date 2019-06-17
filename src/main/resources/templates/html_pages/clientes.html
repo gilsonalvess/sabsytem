@@ -58,7 +58,7 @@
                                 <input th:value="${id}" style="display:none;" id="input-id" name="id">
                                 <div class="form-group col-md-4">
                                     <label for="input-nome">Nome</label>
-                                    <input th:value="${nome}" name="nome" type="text" class="form-control" id="input-nome" placeholder="Nome">
+                                    <input th:value="${nome}" name="nome" required type="text" class="form-control" id="input-nome" placeholder="Nome">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="input-email">Email</label>
@@ -68,11 +68,11 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="input-fone">Fone</label>
-                                    <input th:value="${fone}" name="fone" type="text" class="form-control" id="input-fone">
+                                    <input th:value="${fone}" name="fone" type="text" required class="form-control" id="input-fone">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="input-sexo">Sexo</label>
-                                    <select th:value="${sexo}" name="sexo" id="input-sexo" class="form-control">
+                                    <select th:value="${sexo}" name="sexo" required id="input-sexo" class="form-control">
                                         <option selected>Selecione</option>
                                         <option>Feminino</option>
                                         <option>Masculino</option>

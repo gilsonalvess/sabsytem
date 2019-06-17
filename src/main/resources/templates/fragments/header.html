@@ -1,7 +1,7 @@
 <header th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
     <!-- Static navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">SabSystem</a>
+        <a class="navbar-brand" href="/">SabSystem |</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,25 +9,25 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/agendamentos/listar">Agendamentos<span class="sr-only">(current)</span></a>
+                <li id="link-painel" class="nav-item">
+                    <a  class="nav-link" href="/">Painel<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/clientes/listar">Clientes<span class="sr-only">(current)</span></a>
+                <li id="link-agendamentos" class="nav-item">
+                    <a  class="nav-link" href="/agendamentos/listar">Agendamentos<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/usuarios/listar">Usuários</a>
+                <li id="link-clientes" class="nav-item">
+                    <a  class="nav-link" href="/clientes/listar">Clientes<span class="sr-only">(current)</span></a>
+                </li>
+                <li id="link-usuarios" class="nav-item">
+                    <a  class="nav-link" href="/usuarios/listar">Usuários</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Configurações
+                        Relatórios
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="/agendamentos/pdfagendamentos" target="_blank">Agendamentos do dia</a>
                     </div>
                 </li>
             </ul>
@@ -35,5 +35,17 @@
                 <a class="btn btn-outline-success my-2 my-sm-0" href="/logout" role="button">Sair</a>
             </form>
         </div>
+        <script>
+            var pageURL = $(location).attr("href");
+            var linkPainel =  pageURL === "http://localhost:8080/";
+            var linkAgendamentos =  pageURL.match("agendamentos");
+            var linkCliente =  pageURL.match("clientes");
+            var linkUsuarios =  pageURL.match("usuarios");
+
+            linkPainel ? $("#link-painel").addClass("active"): '';
+            linkAgendamentos ? $("#link-agendamentos").addClass("active"): '';
+            linkCliente ? $("#link-clientes").addClass("active") : '';
+            linkUsuarios ? $("#link-usuarios").addClass("active") : '';
+        </script>
     </nav>
 </header>

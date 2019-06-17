@@ -11,7 +11,9 @@ $(document).ready(function () {
     $(document).on('click', "#cancelar-agend", function () {
         var $row = $(this).closest("tr");
         var $id = $row.find("#id-agendamento").text();
-        acaoStatus($id, 'Cancelado');
+        $('#btn-confirma-cancel').click(function () {
+            acaoStatus($id, 'Cancelado');
+        });
     });
 
     //finalizar agendamento
@@ -36,21 +38,20 @@ $(document).ready(function () {
     };
 
 //--------------------edição-----------------------------------------
-    $(document).on('click', "#btn-editar-agendamento", function () {
+    $(document).on('click', "#reagendar", function () {
         var $row = $(this).closest("tr");
-        var $id = $row.find("#id").text();
+        var $id = $row.find("#id-agendamento").text();
         $.ajax({
             method: 'GET',
-            url: 'http://localhost:8080/agendamentos/editar/' + $id,
+            url: 'http://localhost:8080/agendamentos/reagendar/' + $id,
             success: function (data) {
                 $("input[name*='id']").val(data.id).text();
-                $("input[name*='username']").val(data.username).text();
-                $("input[name*='email']").val(data.email).text();
-                $("#input-role").val(data.role).select();
-                $("#cbx-desativato").prop("checked", data.desativado);
-                $('#btn-salvar').html("Editar");
-                $('#usuarioModalLabel').html("Editando usuário " + data.username);
-                $('#form-user').attr("action", "/usuarios/editar");
+                $("input[name*='dataAgendamento']").val(data.dataFormatada).text();
+                $("input[name*='horaAgendamento']").val(data.horaFormatada).text();
+                $('#input-cliente-agend').val(data.cliente.id).select();
+                $('#btn-salvar-agendamento').html("Salvar");
+                $('#agendamentoModalLabel').html("Reagendando cliente " + data.cliente.nome);
+                $('#form-agendamento').attr("action", "/agendamentos/reagendar");
             },
             error: function () {
                 alert("Houve um erro na requisição!");
@@ -58,9 +59,10 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('click', "#btn-novo-usuario", function () {
-        $("#form-user").trigger("reset");
-        $('#usuarioModalLabel').html("Novo usuário");
+    $(document).on('click', "#btn-novo-agendamento", function () {
+        $("#form-agendamento").trigger("reset");
+        $('#agendamentoModalLabel').html("Novo agendamento");
+        $('#input-cliente-agend').val('').text();
         $('#btn-salvar').html("Adicionar");
     });
 
@@ -82,8 +84,13 @@ $(document).ready(function () {
         }
     });
 
-    //------------datetimepiker--------------
+    //------------filtro data----------------
+    $(document).on('click', "#btn-pesq-agendamento", function () {
+        var data = $("#input-pesq-agendamento").val();
+        $('#btn-pesq-agendamento').attr("href", "/agendamentos/filtrar?data=" + data);
+    });
 
+    //------------datetimepiker--------------
 
     var today;
     today = new Date(new Date().getFullYear(),
@@ -98,5 +105,12 @@ $(document).ready(function () {
 
     $('#timepicker').timepicker({
         uiLibrary: 'bootstrap4'
+    });
+
+    $('#input-pesq-agendamento').datepicker({
+        uiLibrary: 'bootstrap4',
+        format: 'dd/mm/yyyy',
+        showOnFocus: true,
+        showRightIcon: false
     });
 });

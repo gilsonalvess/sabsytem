@@ -16,13 +16,6 @@ public class SabApplication {
         SpringApplication.run(SabApplication.class, args);
     }
 
-    //    @Bean
-//    public SpringTemplateEngine templateEngine() {
-//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-//        templateEngine.setTemplateResolver(thymeleafTemplateResolver());
-//        return templateEngine;
-//    }
-//
     @Bean
     public SpringResourceTemplateResolver thymeleafTemplateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -31,21 +24,9 @@ public class SabApplication {
         templateResolver.setTemplateMode("HTML");
         return templateResolver;
     }
-//
-//    @Bean
-//    public ThymeleafViewResolver thymeleafViewResolver() {
-//        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-//        viewResolver.setTemplateEngine(templateEngine());
-//        return viewResolver;
-//    }
 
     @Bean
     public LayoutDialect layoutDialect() {
         return new LayoutDialect();
     }
-
-//    @Bean
-//    public WithDialect withDialect() {
-//        return new WithDialect();
-//    }
 }

@@ -1,6 +1,5 @@
 package br.com.ads.dwpuc.models;
 
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -78,5 +77,10 @@ public class Agendamento {
     public String getHoraFormatada() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return getHoraAgendamento().format(formatter);
+    }
+
+    public String getDataFormatada() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return getDataAgendamento().format(formatter);
     }
 }
