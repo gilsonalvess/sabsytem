@@ -31,7 +31,7 @@ public class Cliente {
     private String sexo;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Agendamento> agendamento;
 
     public String getNome() {
