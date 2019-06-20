@@ -7,6 +7,12 @@
             <div class="col">
                 <h2>Agendamentos</h2>
             </div>
+            <th:block th:if="${alertConsulta}">
+                <div class="alert alert-warning alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Ops!</strong> Não foi localizado agendamentos para data informada!
+                </div>
+            </th:block>
             <div class="col" style="color: darkgrey">
                 <h5 class="text-right" th:text="${infoData}"></h5>
             </div>
@@ -25,7 +31,7 @@
         <div class="form-row">
             <div class="col">
                 <div class="form-inline my-3 my-lg-0">
-                    <input id="input-pesq-agendamento" required class="form-control mr-sm-2" type="search" placeholder="Filtro data" aria-label="Search">
+                    <input id="input-pesq-agendamento" required class="form-control mr-sm-2"  placeholder="Filtro data">
                     <a id="btn-pesq-agendamento" href="" class="btn btn-outline-primary my-2 my-sm-0" role="button">Pesquisar</a>
                 </div>
             </div>
@@ -44,6 +50,7 @@
                 <th scope="col">Codigo</th>
                 <th scope="col">Cliente</th>
                 <th scope="col">Fone</th>
+                <th th:if="${infoData == 'Todos agendamentos'}" scope="col">Data</th>
                 <th scope="col">Horário</th>
                 <th scope="col">Status</th>
                 <th scope="col"></th>
@@ -54,6 +61,7 @@
                 <td id="id-agendamento" th:text="${agendamento.id}"></td>
                 <td id="nome-cliente-agendamento" th:text="${agendamento.cliente.nome}"></td>
                 <td id="fone-cliente-agendamento" th:text="${agendamento.cliente.fone}"></td>
+                <td id="data-agendamento" th:if="${infoData == 'Todos agendamentos'}" th:text="${agendamento.getDataFormatada()}"></td>
                 <td id="hora-agendamento" th:text="${agendamento.getHoraFormatada()}"></td>
                 <td id="status-agendamento">
                     <span id="span-status" class="badge badge-secondary" th:text="${agendamento.status}"></span>

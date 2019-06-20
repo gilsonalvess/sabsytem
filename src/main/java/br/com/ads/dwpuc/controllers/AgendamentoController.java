@@ -64,11 +64,17 @@ public class AgendamentoController {
         if (data == null) {
             return "redirect:/agendamentos/listar";
         }
+
         List<Agendamento> agendamentos = agendamentoService.findAgendamentosByData(data);
-        String infoData = "Agendamentos do dia: " + agendamentos.get(0).getDataFormatada();
-        model.addAttribute("agendamentos", agendamentos);
-        model.addAttribute("infoData", infoData);
-        model.addAttribute("clientes", clienteService.findAll());
+
+        if (agendamentos.size() > 0) {
+            String infoData = "Agendamentos do dia: " + agendamentos.get(0).getDataFormatada();
+            model.addAttribute("agendamentos", agendamentos);
+            model.addAttribute("infoData", infoData);
+            model.addAttribute("clientes", clienteService.findAll());
+            return "html_pages/agendamentos";
+        }
+        model.addAttribute("alertConsulta", true);
         return "html_pages/agendamentos";
     }
 
@@ -86,7 +92,7 @@ public class AgendamentoController {
     }
 
     @RequestMapping(value = "/pdfagendamentos", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> citiesReport() {
+    public ResponseEntity<InputStreamResource> agendamentosReport() {
         LocalDate data = LocalDate.now();
         List<Agendamento> agendamentos = agendamentoService.findAgendamentosByData(data);
 

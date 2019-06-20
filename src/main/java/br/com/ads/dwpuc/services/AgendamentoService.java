@@ -46,8 +46,9 @@ public class AgendamentoService {
     private void calculaAtraso(List<Agendamento> agendamentos) {
         for (Agendamento agendto : agendamentos) {
             LocalTime horaAgora = LocalTime.now();
+            LocalDate dataHoje = LocalDate.now();
             boolean statusCondicao = agendto.getStatus().equals("Confirmado");
-            if (horaAgora.isAfter(agendto.getHoraAgendamento().plusSeconds(25)) && statusCondicao) {
+            if (horaAgora.isAfter(agendto.getHoraAgendamento().plusSeconds(25)) && statusCondicao && agendto.getDataAgendamento().equals(dataHoje)) {
                 agendto.setStatus("Atrasado");
             }
         }
